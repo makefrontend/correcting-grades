@@ -4,10 +4,13 @@ from datacenter.models import Schoolkid, Mark, Chastisement, Lesson, Commendatio
 
 
 def get_schoolkid(name):
+    if not name:
+        print('Не передано имя ученика!')
+        return
     try:
         return Schoolkid.objects.get(full_name__contains=name)
     except Schoolkid.DoesNotExist:
-        print('Указанный ученик отсутствует в списках!')
+        print(f'Ученик {name} отсутствует в списках!')
         return
     except Schoolkid.MultipleObjectsReturned:
         print('Найдено больше одного ученика! Уточните запрос!')
@@ -20,13 +23,13 @@ def fix_marks(name):
         schoolkid=schoolkid,
         points__in=[2, 3]
     ).update(points=5)
-    print('Оценки исправлены!')
+    print(f'Оценки ученика {name} исправлены!')
 
 
 def remove_chastisements(name):
     schoolkid = get_schoolkid(name)
     Chastisement.objects.filter(schoolkid=schoolkid).delete()
-    print('Замечания удалены!')
+    print(f'Замечания ученика {name} удалены!')
 
 
 def create_commendation(name, lesson_name):
@@ -67,13 +70,12 @@ def create_commendation(name, lesson_name):
         year_of_study=schoolkid.year_of_study,
         group_letter=schoolkid.group_letter,
         subject__title=lesson_name
-    ).order_by("-date").first()
-    lesson_random = random.randint(0, lesson.count())
+    ).order_by('?').first()
     Commendation.objects.create(
         text=random.choice(commendations),
-        created=lesson[lesson_random].date,
+        created=lesson.date,
         schoolkid=schoolkid,
-        subject=lesson[lesson_random].subject,
-        teacher=lesson[lesson_random].teacher
+        subject=lesson.subject,
+        teacher=lesson.teacher
     )
-    print('Похвала добавлены! Теперь ты еще больший молодец!')
+    print('Похвала добавлена! Теперь ты еще больший молодец!')
