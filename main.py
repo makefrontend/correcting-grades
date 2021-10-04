@@ -19,6 +19,8 @@ def get_schoolkid(name):
 
 def fix_marks(name):
     schoolkid = get_schoolkid(name)
+    if not schoolkid:
+        return
     Mark.objects.filter(
         schoolkid=schoolkid,
         points__in=[2, 3]
@@ -28,6 +30,8 @@ def fix_marks(name):
 
 def remove_chastisements(name):
     schoolkid = get_schoolkid(name)
+    if not schoolkid:
+        return
     Chastisement.objects.filter(schoolkid=schoolkid).delete()
     print(f'Замечания ученика {name} удалены!')
 
@@ -66,11 +70,15 @@ def create_commendation(name, lesson_name):
         "Теперь у тебя точно все получится!",
     ]
     schoolkid = get_schoolkid(name)
+    if not schoolkid:
+        return
     lesson = Lesson.objects.filter(
         year_of_study=schoolkid.year_of_study,
         group_letter=schoolkid.group_letter,
         subject__title=lesson_name
     ).order_by('?').first()
+    if not lesson:
+        print(f'Предмет {lesson_name} не найден! Уточните предмет!')
     Commendation.objects.create(
         text=random.choice(commendations),
         created=lesson.date,
