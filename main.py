@@ -79,6 +79,7 @@ def create_commendation(name, lesson_name):
     ).order_by('?').first()
     if not lesson:
         print(f'Предмет {lesson_name} не найден! Уточните предмет!')
+        return
     Commendation.objects.create(
         text=random.choice(commendations),
         created=lesson.date,
