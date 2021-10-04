@@ -12,7 +12,7 @@
 python3 manage.py shell
 ```
 4. Импортируйте команды из скрипта
-```pyrhon
+```python
 from main import fix_marks, remove_chastisements, create_commendation
 ```
 5. Поздравляю! Вы готовы вносить изменения в БД электронного дневника
