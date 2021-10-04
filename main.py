@@ -31,7 +31,7 @@ def remove_chastisements(name):
 
 
 def create_commendation(name, lesson_name):
-    praise = [
+    commendations = [
         "Молодец!",
         "Отлично!",
         "Хорошо!",
@@ -71,7 +71,7 @@ def create_commendation(name, lesson_name):
     ).order_by("-date").first()
     lesson_random = random.randint(0, lesson.count())
     Commendation.objects.create(
-        text=random.choice(praise),
+        text=random.choice(commendations),
         created=lesson[lesson_random].date,
         schoolkid=schoolkid,
         subject=lesson[lesson_random].subject,
