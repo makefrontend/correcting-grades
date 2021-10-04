@@ -12,7 +12,7 @@
 python3 manage.py shell
 ```
 4. Импортируйте команды из скрипта
-```bash
+```pyrhon
 from main import fix_marks, remove_chastisements, create_commendation
 ```
 5. Поздравляю! Вы готовы вносить изменения в БД электронного дневника
@@ -20,13 +20,13 @@ from main import fix_marks, remove_chastisements, create_commendation
 ## Выполнение команд
 Для внесения изменений в электронный дневник вам необходимо выполнить одну из следующих команд:
 - Исправление оценок 2 и 3 на 5
-```bash
+```python
 fix_marks('<Полное имя ученика>')
 ```
 - Удаление замечений преподавателя
-```bash
+```python
 remove_chastisements('<Полное имя ученика>')
 ```
 - Добавить похвалу по какому-либо предмету
-```bash
+```python
 create_commendation('<Полное имя ученика>', '<Название предмета>')
